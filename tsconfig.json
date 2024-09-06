@@ -7,12 +7,12 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "rootDir": "./server",     
+    "rootDir": "./server",
     "baseUrl": "./",
     "paths": {
       "@/*": ["./server/*"]
     }
   },
-  "include": ["server/**/*.ts"], 
-  "exclude": ["node_modules"] 
+  "include": ["server/**/*.ts", "index.d.ts"],
+  "exclude": ["node_modules"]
 }
