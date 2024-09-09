@@ -17,13 +17,24 @@ const getAllProducts = async (req: Request, res: Response) => {
 }
 
 const getProductsByCategory = async (req: Request, res: Response) => {
-    const products = await ProductService.getByCategory(req.params.category);
-    res.json({ products });
+  const products = await ProductService.getByCategory(req.params.category)
+  res.json({ products })
 }
 
-const getFeaturedProducts = async (req: Request, res: Response) => {}
-const getRecommendedProducts = async (req: Request, res: Response) => {}
-const toggleFeaturedProduct = async (req: Request, res: Response) => {}
+const getRecommendedProducts = async (req: Request, res: Response) => {
+  const products = await ProductService.getRandom()
+  res.json(products)
+}
+
+const toggleFeaturedProduct = async (req: Request, res: Response) => {
+  const product = await ProductService.toggleFeatured(req.params.id)
+  res.json(product)
+}
+
+const getFeaturedProducts = async (req: Request, res: Response) => {
+  const products = await ProductService.getFeatured()
+  res.json(products)
+}
 
 export default {
   createProduct,

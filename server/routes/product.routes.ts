@@ -1,15 +1,16 @@
-import express from "express";
-import ProductController from "../controllers/product.controller";
-import { adminRoute, authRoute } from "../middlewares/authenticate";
+import express from 'express'
+import ProductController from '../controllers/product.controller'
+import { adminRoute, authRoute } from '../middlewares/authenticate'
+import { ctrlWrapper } from '../utils/ctrlWrapper'
 
-const router = express.Router();
+const router = express.Router()
 
-router.get("/", authRoute, adminRoute, ProductController.getAllProducts);
-router.get("/featured", ProductController.getFeaturedProducts);
-router.get("/category/:category", ProductController.getProductsByCategory);
-router.get("/recommendations", ProductController.getRecommendedProducts);
-router.post("/", authRoute, adminRoute, ProductController.createProduct);
-router.patch("/:id", authRoute, adminRoute, ProductController.toggleFeaturedProduct);
-router.delete("/:id", authRoute, adminRoute, ProductController.removeProduct);
+router.get('/', authRoute, adminRoute, ctrlWrapper(ProductController.getAllProducts))
+router.get('/featured', ctrlWrapper(ProductController.getFeaturedProducts))
+router.get('/category/:category', ctrlWrapper(ProductController.getProductsByCategory))
+router.get('/recommendations', ctrlWrapper(ProductController.getRecommendedProducts))
+router.patch('/:id', authRoute, adminRoute, ctrlWrapper(ProductController.toggleFeaturedProduct))
+router.post('/', authRoute, adminRoute, ctrlWrapper(ProductController.createProduct))
+router.delete('/:id', authRoute, adminRoute, ctrlWrapper(ProductController.removeProduct))
 
-export default router;
+export default router

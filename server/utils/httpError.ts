@@ -12,8 +12,11 @@ export const errorMessageList: IErrorMessageList = {
 export const httpError = ({
   status = 500,
   message = errorMessageList[status],
-}: IHttpError): IHttpError => {
-  const error = new Error(message) as Error & IHttpError
-  error.status = status
-  return error
-}
+}: {
+  status?: number;
+  message?: string;
+}): IHttpError => {
+  const error = new Error(message) as IHttpError;
+  error.status = status;
+  return error;
+};

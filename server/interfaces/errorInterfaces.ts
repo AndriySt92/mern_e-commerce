@@ -1,6 +1,5 @@
-export interface IHttpError {
-  status: number
-  message?: string
+export interface IHttpError extends Error {
+  status: number;
 }
 
 export interface IErrorMessageList {

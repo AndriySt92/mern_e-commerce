@@ -2,6 +2,7 @@ import ProductModel from '../models/product.model'
 import { httpError } from '../utils/httpError'
 import { IProduct } from '../interfaces/productInterfaces'
 import cloudinary from '../config/cloudinary'
+import { redis } from '../config/redis'
 
 const create = async (productData: Omit<IProduct, 'isFeatured'>) => {
   const { name, description, image, price, category } = productData
@@ -47,6 +48,7 @@ const remove = async (productId: string) => {
   }
 
   await ProductModel.findByIdAndDelete(productId)
+
   return
 }
 
@@ -55,9 +57,65 @@ const getByCategory = async (category: string) => {
   return products
 }
 
+const getRandom = async () => {
+  const randomProducts = await ProductModel.aggregate([
+    {
+      $sample: { size: 4 },
+    },
+    {
+      $project: {
+        _id: 1,
+        name: 1,
+        description: 1,
+        image: 1,
+        price: 1,
+      },
+    },
+  ])
+
+  return randomProducts
+}
+
+const toggleFeatured = async (productId: string) => {
+  const product = await ProductModel.findById(productId)
+
+  if (product) {
+    product.isFeatured = !product.isFeatured
+    const updatedProduct = await product.save()
+
+    const featuredProducts = await ProductModel.find({ isFeatured: true }).lean()
+    await redis.set('featured_products', JSON.stringify(featuredProducts))
+
+    return updatedProduct
+  } else {
+    throw httpError({ status: 404, message: 'Product not found' })
+  }
+}
+
+const getFeatured = async () => {
+  let featuredProducts = await redis.get('featured_products')
+
+  if (featuredProducts) {
+    return JSON.parse(featuredProducts) as IProduct[]
+  }
+
+  const products = await ProductModel.find({ isFeatured: true }).lean<IProduct[]>()
+  console.log(products)
+  if (!products || products.length === 0) {
+    throw httpError({ status: 404, message: 'No featured products found' })
+  }
+
+  await redis.set('featured_products', JSON.stringify(products))
+
+  return products
+}
+
 export default {
   create,
   getAll,
   remove,
   getByCategory,
+  getRandom,
+  toggleFeatured,
+  getFeatured,
 }
