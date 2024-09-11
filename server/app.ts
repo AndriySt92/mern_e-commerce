@@ -2,11 +2,13 @@ import express, { NextFunction, Request, Response } from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import connectDB from './config/connectDB'
-import authRoutes from './routes/auth.routes'
-import productRoutes from './routes/product.routes'
 import { IHttpError } from './interfaces/errorInterfaces'
 import { errorMessageList } from './utils/httpError'
 import cookieParser from 'cookie-parser'
+import authRoutes from './routes/auth.routes'
+import productRoutes from './routes/product.routes'
+import cartRoutes from './routes/cart.routes'
+
 
 dotenv.config()
 
@@ -21,6 +23,7 @@ app.use(express.urlencoded({ extended: true }))
 // Routes
 app.use('/api/auth', authRoutes)
 app.use("/api/products", productRoutes);
+app.use("/api/cart", cartRoutes);
 
 //error handlers
 app.use((req: Request, res: Response): void => {

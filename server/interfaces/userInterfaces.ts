@@ -7,6 +7,7 @@ export interface IRegisterData {
 export interface ILoginData extends Omit<IRegisterData, 'username'> {}
 
 export interface ICartItem {
+  _id: string
   quantity: number
   product: string
 }

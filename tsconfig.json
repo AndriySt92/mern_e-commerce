@@ -13,6 +13,9 @@
       "@/*": ["./server/*"]
     }
   },
-  "include": ["server/**/*.ts", "index.d.ts"],
+  "include": [
+    "server/**/*.ts",
+    "server/interfaces/**/*.ts" // Ensure this path is correct
+  ],
   "exclude": ["node_modules"]
 }
