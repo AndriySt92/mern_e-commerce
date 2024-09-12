@@ -1,13 +1,13 @@
 import express from 'express'
-import CartService from '../controllers/cart.controller'
+import CartController from '../controllers/cart.controller'
 import { authRoute } from '../middlewares/authenticate'
 import { ctrlWrapper } from '../utils/ctrlWrapper'
 
 const router = express.Router()
 
-router.get('/', authRoute, ctrlWrapper(CartService.getCartProducts))
-router.post('/', authRoute, ctrlWrapper(CartService.addToCart))
-router.delete('/:id', authRoute, ctrlWrapper(CartService.removeAllFromCart))
-router.put('/:id', authRoute, ctrlWrapper(CartService.updateQuantity))
+router.get('/', authRoute, ctrlWrapper(CartController.getCartProducts))
+router.post('/', authRoute, ctrlWrapper(CartController.addToCart))
+router.delete('/:id', authRoute, ctrlWrapper(CartController.removeAllFromCart))
+router.put('/:id', authRoute, ctrlWrapper(CartController.updateQuantity))
 
 export default router

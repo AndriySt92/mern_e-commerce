@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs'
 import { ICartItem } from '../interfaces/userInterfaces'
 
 export interface IUser extends Document {
+  _id: string
   username: string
   email: string
   password: string
