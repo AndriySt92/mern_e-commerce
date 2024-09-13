@@ -13,7 +13,7 @@ const getCoupon = async (req: IRequest, res: Response) => {
   res.json(coupon || null)
 }
 
-const validateCoupon = async (req: Request, res: Response) => {
+const validateCoupon = async (req: IRequest, res: Response) => {
   const { _id: userId } = req.user as IUser
   const { code } = req.body
 

@@ -8,6 +8,8 @@ import cookieParser from 'cookie-parser'
 import authRoutes from './routes/auth.routes'
 import productRoutes from './routes/product.routes'
 import cartRoutes from './routes/cart.routes'
+import couponRoutes from './routes/coupon.routes'
+import paymentRoutes from './routes/payment.routes'
 
 
 dotenv.config()
@@ -24,6 +26,8 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/api/auth', authRoutes)
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
+app.use("/api/coupons", couponRoutes);
+app.use("/api/payments", paymentRoutes);
 
 //error handlers
 app.use((req: Request, res: Response): void => {
