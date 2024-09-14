@@ -10,6 +10,7 @@ import productRoutes from './routes/product.routes'
 import cartRoutes from './routes/cart.routes'
 import couponRoutes from './routes/coupon.routes'
 import paymentRoutes from './routes/payment.routes'
+import analyticsRoutes from './routes/analytics.routes'
 
 
 dotenv.config()
@@ -28,6 +29,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/coupons", couponRoutes);
 app.use("/api/payments", paymentRoutes);
+app.use("/api/analytics", analyticsRoutes);
 
 //error handlers
 app.use((req: Request, res: Response): void => {
